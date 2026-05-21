@@ -9,6 +9,7 @@ agent_graph = build_graph()
 class TaskRequest(BaseModel):
     task: str
     code_context: Optional[str] = None
+    preferred_agent: Optional[str] = None
 
 class TaskResponse(BaseModel):
     task_type: str
@@ -26,7 +27,7 @@ async def run_agent(request: TaskRequest):
         "doc_result": None,
         "test_result": None,
         "final_response": None,
-        "messages": []
+        "messages": [f"User preferred agent: {request.preferred_agent}" if request.preferred_agent else "No agent preference specified"]
     }
 
     result = agent_graph.invoke(initial_state)
@@ -44,4 +45,4 @@ async def run_agent(request: TaskRequest):
         task_type=task_type,
         result=result_map.get(task_type, "No result."),
         messages=result["messages"]
-    )# API routes
+    )
