@@ -30,11 +30,11 @@ User Task (natural language)
 
 ##  Features
 
-- **Intelligent routing** — orchestrator classifies task and routes to the right agent automatically
-- **4 specialized agents** — each with a focused system prompt for their domain
-- **LangGraph state machine** — shared state flows through the graph, every agent reads and writes
-- **Groq inference** — Llama 3.3 70B for fast, high-quality responses
-- **Syntax-highlighted UI** — dark terminal aesthetic, markdown rendering, live agent log
+- **Intelligent routing** - orchestrator classifies task and routes to the right agent automatically
+- **4 specialized agents** - each with a focused system prompt for their domain
+- **LangGraph state machine** - shared state flows through the graph, every agent reads and writes
+- **Groq inference** - Llama 3.3 70B for fast, high-quality responses
+- **Syntax-highlighted UI** - dark terminal aesthetic, markdown rendering, live agent log
 
 ##  Stack
 
