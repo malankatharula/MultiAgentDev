@@ -18,6 +18,8 @@ An AI-powered multi-agent system that routes developer tasks to specialized agen
 ![LangGraph](https://img.shields.io/badge/LangGraph-0.1-purple?style=flat-square)
 ![Groq](https://img.shields.io/badge/Groq-Llama_3.3_70B-orange?style=flat-square)
 
+
+live on : https://huggingface.co/spaces/malankabuilder/MultiAgentDev
 ---
 
 ##  Architecture
