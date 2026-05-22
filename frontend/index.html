@@ -135,6 +135,24 @@ textarea { font: inherit; color: inherit; }
 .icon-btn:hover { background: var(--surface); color: var(--text); }
 .icon-btn svg { width: 16px; height: 16px; }
 
+/* Menu toggle (hamburger) */
+.menu-toggle {
+  display: none;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+  color: var(--text-muted);
+  transition: background var(--t), color var(--t);
+  z-index: 1001;
+}
+.menu-toggle:hover { background: var(--surface); color: var(--text); }
+.menu-toggle svg { width: 20px; height: 20px; }
+.sidebar-overlay {
+  display: none;
+}
+
 .sidebar-scroll {
   flex: 1;
   overflow-y: auto;
@@ -584,53 +602,107 @@ kbd {
   .result-inner { padding: 28px 24px 60px; }
 }
 
-/* Tablet & iPad (768px and below) */
+/* Tablet & iPad (1024px and below) */
+@media (max-width: 1024px) {
+  .sidebar { width: 300px; }
+  .result-inner { padding: 28px 20px 60px; }
+  .topbar { padding: 0 20px; }
+}
+
+/* Mobile & Tablet (768px and below) */
 @media (max-width: 768px) {
   body { flex-direction: column; }
-  .sidebar {
-    width: 100%;
-    height: auto;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    max-height: 45vh;
+  .menu-toggle {
+    display: flex !important;
   }
-  .main { height: auto; min-height: 55vh; }
-  .topbar { height: 48px; padding: 0 16px; }
-  .result-inner { padding: 24px 16px 48px; max-width: 100%; }
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 280px;
+    height: 100vh;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.15);
+    border-right: 1px solid var(--border);
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .sidebar-overlay.active {
+    display: block;
+    opacity: 1;
+  }
+  .main {
+    flex: 1;
+    height: auto;
+    min-height: 100vh;
+  }
+  .topbar {
+    height: 52px;
+    padding: 0 14px;
+    gap: 12px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  .result-inner { padding: 20px 14px 40px; max-width: 100%; }
   .sidebar-scroll { padding: 12px 16px 4px; gap: 12px; }
   .agent-grid { grid-template-columns: 1fr 1fr; gap: 6px; }
   .agent { padding: 9px 9px 9px 12px; }
   .agent-name { font-size: 12px; }
   .agent-desc { font-size: 10.5px; }
   .run-btn { height: 36px; font-size: 13px; }
-  .log { max-height: 120px; padding: 8px 16px 10px; }
+  .log { max-height: 100px; padding: 8px 16px 10px; }
+  .agent-tag { font-size: 12px; padding: 4px 8px; }
+}
+
+/* Small tablets (600px and below) */
+@media (max-width: 600px) {
+  .result-inner { padding: 18px 12px 36px; }
+  .topbar { height: 48px; padding: 0 12px; }
+  .agent-grid { grid-template-columns: 1fr 1fr; }
+  .sidebar-scroll { padding: 12px 14px 4px; }
 }
 
 /* Phones (480px and below) */
 @media (max-width: 480px) {
   .sidebar {
-    max-height: 50vh;
-    overflow-y: auto;
+    width: 260px;
   }
-  .main { min-height: 50vh; }
-  .brand { padding: 14px 16px; }
+  .brand { padding: 12px 14px; }
   .brand-mark { width: 24px; height: 24px; font-size: 13px; }
-  .brand-name { font-size: 15px; }
-  .pill { font-size: 10px; padding: 1px 5px; }
-  .sidebar-scroll { padding: 12px 16px 4px; gap: 10px; }
+  .brand-name { font-size: 14px; }
+  .pill { font-size: 9px; padding: 1px 4px; }
+  .sidebar-scroll { padding: 10px 14px 4px; gap: 10px; }
   .field-label { margin-bottom: 6px; }
   .field-label .lbl { font-size: 10px; }
   .ghost-btn { font-size: 11px; }
   .textarea-wrap textarea { padding: 9px 11px 20px; font-size: 13px; }
   .counter { font-size: 10px; bottom: 4px; right: 6px; }
-  #task-ta { min-height: 80px; }
-  #ctx-ta { min-height: 90px; }
+  #task-ta { min-height: 70px; }
+  #ctx-ta { min-height: 80px; }
   .agent-grid { grid-template-columns: 1fr; gap: 6px; }
   .agent { padding: 8px 8px 8px 11px; }
   .agent-head { gap: 6px; margin-bottom: 2px; }
   .agent-head svg { width: 12px; height: 12px; }
   .agent-name { font-size: 11px; }
-  .agent-desc { font-size: 10px; line-height: 1.3; }
+  .agent-desc { font-size: 9.5px; line-height: 1.3; }
   .run-btn {
     height: 32px;
     font-size: 12px;
@@ -639,37 +711,50 @@ kbd {
   }
   .run-btn svg { width: 12px; height: 12px; }
   .run-btn kbd { font-size: 9px; padding: 0 4px; margin-left: 2px; }
-  .log { max-height: 100px; padding: 6px 16px 8px; font-size: 10.5px; }
+  .log { max-height: 90px; padding: 6px 14px 8px; font-size: 10px; }
   .log-head { font-size: 9px; margin-bottom: 4px; }
-  .log-entry { gap: 6px; padding: 1px 0; }
+  .log-entry { gap: 5px; padding: 1px 0; }
   .log-entry .ts { font-size: 9px; }
-  .topbar { height: 44px; padding: 0 12px; gap: 8px; }
-  .agent-tag { font-size: 12px; padding: 4px 8px; gap: 5px; }
+  .topbar { height: 44px; padding: 0 10px; gap: 8px; }
+  .agent-tag { font-size: 11px; padding: 4px 8px; gap: 4px; }
   .agent-tag .dot { width: 5px; height: 5px; }
-  .exec-time { font-size: 11px; gap: 4px; }
-  .exec-time svg { width: 12px; height: 12px; }
-  .result-inner { padding: 20px 12px 40px; }
-  .empty svg { width: 48px; height: 48px; }
-  .empty .title { font-size: 14px; }
-  .empty .hint { font-size: 12px; }
-  kbd { font-size: 10px; padding: 1px 5px; }
-  .md h1 { font-size: 24px; }
-  .md h2 { font-size: 19px; }
-  .md h3 { font-size: 16px; }
-  .md h4 { font-size: 13px; }
-  .md p { font-size: 14px; }
-  .md ul, .md ol { padding-left: 20px; }
+  .exec-time { font-size: 10px; gap: 3px; }
+  .exec-time svg { width: 11px; height: 11px; }
+  .result-inner { padding: 16px 10px 32px; }
+  .empty svg { width: 44px; height: 44px; }
+  .empty .title { font-size: 13px; }
+  .empty .hint { font-size: 11px; }
+  kbd { font-size: 9px; padding: 1px 5px; }
+  .md h1 { font-size: 22px; }
+  .md h2 { font-size: 18px; }
+  .md h3 { font-size: 15px; }
+  .md h4 { font-size: 12px; }
+  .md p { font-size: 13px; }
+  .md ul, .md ol { padding-left: 18px; margin: 0 0 14px; }
   .codeblock-head { padding: 0 6px 0 10px; }
-  .codeblock-lang { font-size: 10px; }
-  .copy-btn { font-size: 11px; padding: 4px 7px; }
-  .codeblock pre { padding: 10px 12px; font-size: 12px; }
-  .error-card { padding: 12px 14px; }
-  .error-card .t { font-size: 13px; margin-bottom: 2px; }
-  .error-card .m { font-size: 12px; }
+  .codeblock-lang { font-size: 9px; }
+  .copy-btn { font-size: 10px; padding: 3px 6px; }
+  .copy-btn svg { width: 12px; height: 12px; }
+  .codeblock pre { padding: 10px 11px; font-size: 11px; line-height: 1.5; }
+  .error-card { padding: 11px 12px; }
+  .error-card .t { font-size: 12px; margin-bottom: 2px; }
+  .error-card .m { font-size: 11px; }
+}
+
+/* Extra small phones (360px and below) */
+@media (max-width: 360px) {
+  .sidebar { width: 240px; }
+  .brand-name { font-size: 13px; }
+  .topbar { height: 42px; }
+  .result-inner { padding: 14px 8px 28px; }
+  .md h1 { font-size: 20px; }
+  .md h2 { font-size: 16px; }
 }
 </style>
 </head>
 <body>
+
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
 
 <aside class="sidebar" aria-label="Controls">
   <div class="brand">
@@ -756,6 +841,9 @@ kbd {
 
 <main class="main">
   <header class="topbar">
+    <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu" title="Toggle menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
     <div class="agent-tag idle" id="agent-tag"><span class="dot"></span><span id="agent-tag-label">No active agent</span></div>
     <div class="topbar-spacer"></div>
     <div class="exec-time" id="exec-time" style="visibility:hidden">
@@ -780,6 +868,34 @@ kbd {
 <script>
 (() => {
   const $ = (s) => document.querySelector(s);
+  const sidebar = $(".sidebar");
+  const overlay = $("#sidebar-overlay");
+  const menuToggle = $("#menu-toggle");
+
+  // ---------- MOBILE MENU TOGGLE ----------
+  function toggleMenu() {
+    sidebar.classList.toggle("open");
+    overlay.classList.toggle("active");
+  }
+  function closeMenu() {
+    sidebar.classList.remove("open");
+    overlay.classList.remove("active");
+  }
+  
+  if (menuToggle) {
+    menuToggle.addEventListener("click", toggleMenu);
+  }
+  if (overlay) {
+    overlay.addEventListener("click", closeMenu);
+  }
+  
+  // Close menu when clicking agent buttons
+  document.addEventListener("click", (e) => {
+    if (e.target.closest(".agent") && sidebar.classList.contains("open")) {
+      closeMenu();
+    }
+  });
+
   const taskTa = $("#task-ta");
   const ctxTa = $("#ctx-ta");
   const counter = $("#counter");
@@ -793,6 +909,9 @@ kbd {
   const logEntries = $("#log-entries");
   const logHead = $("#log-head");
   const logStatus = $("#log-status");
+  
+  // Close menu on run
+  runBtn.addEventListener("click", closeMenu);
 
   const AGENTS = {
     code:  { name: "Code Agent",  color: "var(--agent-code)" },
@@ -1024,6 +1143,7 @@ kbd {
   }
 
   runBtn.addEventListener("click", submit);
+  runBtn.addEventListener("click", closeMenu);
   document.addEventListener("keydown", (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
       e.preventDefault();
