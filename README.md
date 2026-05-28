@@ -24,7 +24,7 @@ live on : https://huggingface.co/spaces/malankabuilder/MultiAgentDev
 
 ##  Architecture
 
-```
+```     
 User Task (natural language)
          ↓
  Orchestrator Agent  ←── LangGraph StateGraph
