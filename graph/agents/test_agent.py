@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-llm = ChatGroq(model="llama-3.3-70b-versatile", api_key=os.getenv("GROQ_API_KEY"), temperature=0)
+llm = ChatGroq(model=os.getenv("GROQ_MODEL", "openai/gpt-oss-120b"), api_key=os.getenv("GROQ_API_KEY"), temperature=0)
 
 def test_agent_node(state: AgentState) -> AgentState:
     task = state["task"]
